@@ -28,7 +28,10 @@ if sys.platform == 'darwin':
     plat_name = skbuild_plat_name()
     sep = [pos for pos, char in enumerate(plat_name) if char == '-']
     assert len(sep) == 2
-    cmake_args = ['-DCMAKE_OSX_DEPLOYMENT_TARGET:STRING='+plat_name[sep[0]+1:sep[1]],'-DCMAKE_OSX_ARCHITECTURES:STRING='+plat_name[sep[1]+1:]]
+    cmake_args = [
+        f'-DCMAKE_OSX_DEPLOYMENT_TARGET:STRING={plat_name[sep[0] + 1:sep[1]]}',
+        f'-DCMAKE_OSX_ARCHITECTURES:STRING={plat_name[sep[1] + 1:]}',
+    ]
     library_link_args = ['-l{0}'.format(lib) for lib in ('dracoenc', 'draco', 'dracodec')]
 else:
     library_link_args = ['-l:{0}'.format(lib) for lib in ('libdracoenc.a', 'libdraco.a', 'libdracodec.a')]
